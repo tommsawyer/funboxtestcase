@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./styles.css"/>
+
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"> </script>
+        <script src="./vendor/ngDraggable.js"> </script>
+        
+        <script>
+            angular.module('FunBoxTestCase', ['ngDraggable']);
+        </script>
+
+        <script src="./lib/controllers/main.js"> </script>
+        <script src="./lib/directives/yandex-map.js"> </script>
+
+        <title>FunBox test case</title>
+    </head>
+    <body ng-app='FunBoxTestCase'>
+        <div class='container' ng-controller='mainController'>
+            <h1>FunBox Test Case</h1>
+            <div class='row'>
+                <div class='col-md-3'>
+                    <div class='main-menu'>
+                        <input type="text"
+                            class='form-control'
+                            ng-keypress='onInputKeyPress($event)'
+                            ng-model='inputPoint'
+                            placeholder='Input new point'/>
+
+                        <br />
+                        Points count: {{points.length}}
+                        <br />
+
+                        <ul class='list-group'>
+                            <li ng-repeat='point in points'
+                                class='list-group-item'
+                                ng-drag='true'
+                                ng-drop='true'
+                                ng-drop-success='onDropSuccess($index, $data, $event)'
+                                ng-drag-data='point'>
+                                {{point}}
+                                <button class='btn btn-default pull-right' ng-click='removePoint(point)'>
+                                    <span class='glyphicon glyphicon-trash'></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='col-md-9'>
+                    <div id='yandexmap' yandex-map='' points='points'> </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
